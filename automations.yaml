@@ -1,0 +1,40 @@
+- id: '1540759008487'
+  alias: Večení svíceni
+  trigger:
+  - entity_id: sun.sun
+    from: above_horizont
+    platform: state
+    to: below_horizont
+  condition:
+    condition: or
+    conditions:
+    - condition: state
+      entity_id: device_tracker.radek_mb
+      state: home
+    - condition: state
+      entity_id: device_tracker.alenka_mb
+      state: home
+  action:
+  - data:
+      entity_id: switch.sonof_switch_01
+    service: switch.turn_on
+  - data:
+      entity_id: switch.sonof_switch_02
+    service: switch.turn_on
+- id: ranni
+  alias: Ranní svíceni
+  trigger:
+  - at: 07:00:00
+    platform: time
+  condition:
+  - condition: state
+    entity_id: device_tracker.radek_mb
+    state: home
+  action:
+  - data:
+      entity_id: switch.sonof_switch_01
+    service: switch.turn_on
+  - data:
+      entity_id: switch.sonof_switch_02
+    service: switch.turn_on
+

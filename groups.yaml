@@ -1,0 +1,104 @@
+doma:
+  name: Doma
+  view: yes
+  entities:
+    - switch.sonof_switch_01
+    - switch.sonof_switch_02
+    - group.all_automations
+    - device_tracker.radek_mb
+    - device_tracker.alenka_mb
+    - sensor.temp__th10_1
+    - sensor.temp__th10_2
+
+
+
+
+
+              #    - group.all_lights
+      #    - group.all_devices
+      #    - group.all_scripts
+      #    - group.all_automations
+
+
+
+#livingroom:
+#  name : lampicky
+#  view : yes
+#  entities :
+#    - switch.sonof_switch_01
+#    - switch.sonof_switch_02
+
+
+
+
+#group:
+#  balcony_window:
+#    entities:
+#      - "switch.Kitchen Light"
+#
+
+
+#doma:
+#  name: Doma
+#  view: yes
+#  entities:
+#    - sensor.discogs
+#    - sun.sun
+#    - automation.vychod_slunce__notifikace
+#
+#
+#jezero:
+#  name: 'Na Jezeře'
+#  view: yes
+#  entities:
+#    - input_boolean.light_livingroom
+#    - input_boolean.light_kitchen
+#
+#
+#            #      - group.all_switches
+#            #          hidden: false
+#            #      - group.all_lights
+#            #          hidden: false
+#            #      - group.all_devices
+#            #          hidden: false
+#            #      - group.all_scripts
+#            #          hidden: false
+#            #      - group.all_automations
+#            #          hidden: false
+#            #      - group.all_automations
+#            #          hidden: false
+#
+##group:
+##  default_view:
+##    view: yes
+##    icon: mdi:home
+##    entities:
+##      - group.kitchen
+##      - group.awesome_people
+##      - group.climate
+##  kitchen:
+##    name: Kitchen
+##    entities:
+##      - switch.kitchen_pin_3
+##  upstairs:
+##    name: Kids
+##    icon: mdi:account-multiple
+##    view: yes
+##    entities:
+##      - input_boolean.notify_home
+##      - camera.demo_camera
+##      - device_tracker.demo_paulus
+##      - group.garden
+##  climate:
+##    name: Climate
+##    view: no
+##    entities:
+##      - sensor.bedroom_temp
+##      - sensor.porch_temp
+##  awesome_people:
+##    name: Awesome People
+##    view: no
+##    entities:
+##      - device_tracker.dad_smith
+##      - device_tracker.mom_smith
+##

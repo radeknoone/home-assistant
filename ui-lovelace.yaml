@@ -1,0 +1,14 @@
+name: Palmaire
+views:
+  - name: Floorplan
+    cards:
+    - type: picture-elements
+      image: /local/palmaire_floorplan.png
+      elements:
+      - type: state-icon
+        tap_action: toggle
+        entity: switch.back_patio_lightstrip
+        style:
+          top: 76%
+          left: 60%
+

@@ -1,0 +1,401 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  latitude: 50.110463
+  longitude: 14.566669
+  elevation: 265 
+  unit_system: metric
+  time_zone: Europe/Prague
+  customize: !include customize.yaml
+
+
+logger:
+  default: info
+# Enables weather
+weather:
+  - platform: yweather
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+# Enables recorder
+recorder:
+
+weblink:
+  entities:
+  - name: Router
+    url: http://192.168.0.1/
+  - name: "Teploměr za televizí"
+    url: http://192.168.0.101/
+  - name: "Lampička u stolu"
+    url: http://192.168.0.102/
+  - name: "Lampa u gramofonu"
+    url: http://192.168.0.103/
+  - name: "Teploměr za oknem"
+    url: http://192.168.0.104/
+
+
+
+# List of sensors
+sensor:
+  - platform: command_line
+    name: db_file_size
+    command: "du -m /root/.homeassistant/home-assistant_v2.db | cut -f1"
+    unit_of_measurement: 'MB'
+    value_template: '{{ value | int - 1 }}'
+  - platform: history_stats
+    name: 'Radek mobil away'
+    entity_id: device_tracker.radek_mb
+    state: 'away'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+  - platform: mqtt
+    state_topic: "tele/sonof_switch_th10_02/SENSOR"   
+    name: "Temp - th10_2"
+    unit_of_measurement: "°C"
+    force_update: true
+    value_template: '{{ value_json["DS18B20"]["Temperature"] }}'
+  - platform: mqtt
+    state_topic: "tele/sonof_switch_th10_01/SENSOR"   
+    name: "Temp - th10_1"
+    unit_of_measurement: "°C"
+    force_update: true
+    value_template: '{{ value_json["DS18B20"]["Temperature"] }}'
+
+    #  - platform: yr
+    #  - platform: statistics
+    #    entity_id: sensor.time_online
+    #    max_age:
+    #      minutes: 30
+    #  - platform: yweather
+    #    view: no
+    #    monitored_conditions:
+    #    - weather
+    #    - weather_current
+    #    - temp_min
+    #    - temp_max
+    #    - wind_speed
+    #    - pressure
+    #    - visibility
+    #    - humidity
+    #    - temperature
+      #  - platform: statistics
+      #    entity_id: sensor.cpu
+
+    #  - platform: mqtt
+    #    name: "Temperature 2"
+    #state_topic: "tele/sonof_switch_th10_2/SENSOR"
+    #value_template: "{{ value_json.DS18B20.Temperature }}"
+    #unit_of_measurement: "°C"
+    #force_update: true
+
+    #  - platform: mqtt
+    #    name: "Temperature"
+    #    state_topic: "stat/sonof_switch_th10_02/STATUS"
+    #    unit_of_measurement: '°C'
+    #    value_template: "{{ value_json.temperature }}"
+    #  - platform: mqtt
+    #    name: "Temperatur222e"
+    #    state_topic: "tele/sonof_switch_th10_02/SENSOR"
+    #    unit_of_measurement: '°C'
+    #    value_template: "{{ value_json.temperature }}"
+    #  - platform: mqtt
+    #    name: "Temperaturxxxxxxxxxe"
+    #    state_topic: "tele/sonof_switch_th10_02/SENSOR"
+    #    unit_of_measurement: '°C'
+    #  - platform: mqtt
+    #    name: "Temperaturexyz"
+    #    state_topic: "stat/sonof_switch_th10_02/STATUS"
+    #    unit_of_measurement: '°C'
+
+# nmap tracker
+device_tracker:
+ - platform: nmap_tracker
+   hosts:
+     - 192.168.0.150
+     - 192.168.0.151
+     - 192.168.0.160
+     - 192.168.0.161
+
+
+# Http server port
+http:
+  server_port: 80
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+#conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+#map:
+
+# Track the sun
+sun:
+
+# enable brokder
+mqtt:
+  broker: localhost
+  username: mqtt_user
+  password: !secret mqtt_password
+
+# add some switches
+switch:
+  - platform: mqtt 
+    name: "sonof_switch_01"
+    state_topic: "stat/sonoff_touch_kitchen/POWER"
+    command_topic: "cmnd/sonoff_touch_kitchen/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt 
+    name: "sonof_switch_02"
+    state_topic: "stat/sonoff_touch_livingroom/POWER"
+    command_topic: "cmnd/sonoff_touch_livingroom/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt 
+    name: "sonof_switch_th10_01"
+    state_topic: "stat/sonof_switch_th10_01/POWER"
+    command_topic: "cmnd/sonof_switch_th10_01/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt 
+    name: "sonof_switch_th10_02"
+    state_topic: "stat/sonof_switch_th10_02/POWER"
+    command_topic: "cmnd/sonof_switch_th10_02/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+
+# Text to speech
+tts:
+  - platform: google
+
+
+    #hdmi_cec:
+    #  devices:
+    #    TV: 0.0.0.0
+    #    CHromecast: 2.0.0.0
+
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+
+
+
+
+
+
+    #panel_iframe:
+    #  configurator:
+    #    title: Configurator
+    #    icon: mdi:wrench
+    #    url: http://0.0.0.0:8123
+
+
+    #android_ip_webcam:
+        #  - host: 192.168.0.100
+        #    sensors:
+        #      - audio_connections
+        #      - battery_level
+        #      - battery_temp
+        #      - battery_voltage
+        #      - light
+        #      - motion
+        #      - pressure
+        #      - proximity
+        #      - sound
+        #      - video_connections
+        #    switches:
+        #      - exposure_lock
+        #      - ffc
+        #      - focus
+        #      - gps_active
+        #      - night_vision
+        #      - overlay
+        #      - torch
+        #      - whitebalance_lock
+        #      - video_recording
+
+
+    #timer:
+    #  laundry:
+    #    duration: '00:01:00'
+
+
+    #counter:
+    #  my_custom_counter:
+    #    initial: 30
+    #    step: 1
+
+
+
+
+    #input_boolean:
+    #  update_speedtest:
+    #  name: Update Speedtest
+    #  initial: off
+    #  icon: mdi:refresh
+
+
+
+
+
+
+#  - platform: random
+#  - platform: uptime
+#    name: Time Online
+#    unit_of_measurement: hours
+#  - platform: openweathermap
+#    api_key: 5a55ec6742f99026729c1c500fe1a9a5
+#    monitored_conditions:
+#      - weather
+#      - temperature
+#      - wind_speed
+#      - wind_bearing
+#      - humidity
+#      - pressure
+#      - clouds
+#      - rain
+#      - snow
+#      - weather_code
+  #zone:
+  #- name: Práce
+  #  latitude: 50.071793
+  #  longitude: 14.433614
+  #  radius: 10
+  #  elevation: 224
+  #  icon: mdi:school
+
+    #  - platform: openweathermap
+    #    api_key: 5a55ec6742f99026729c1c500fe1a9a5
+        #alarm_control_panel:
+        #  - platform: manual
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+#http:
+#    server_port:80
+# Example configuration.yaml entry
+# rss_feed_template:
+# Accessible on <Home Assistant url>/api/rss_template/garden
+# Example: https://localhost:8123/api/rss_template/garden
+###rss_feed_template:
+###  garden:
+###    requires_api_password: False
+###    title: "Garden {{ as_timestamp(now())|timestamp_custom('%H:%M', True) }}"
+###    items:
+###    - title: "Outside temperature"
+###      description: "{% if is_state('sensor.temp_outside','unknown') %}---{% else %}{{states.sensor.temp_outside.state}} °C{% endif %}"
+
+
+      #weblink:
+      #  entities:
+      #  - name: Router
+      #    url: http://192.168.1.1/
+      #  - name: Home Assistant
+      #    url: https://www.home-assistant.io
+      #  - name: Grafana
+      #    url: /grafana
+
+#media_player:
+#  - platform: vlc
+
+
+
+
+# Discogs
+#  - platform: discogs
+#    token: sBSUpkhDEtgfWGSNWuwlLwBDlUUPgdfPZKAUQbqF
+# Weather prediction
+
+# Example configuration.yaml entry
+#binary_sensor:
+#  - platform: workday
+#    country: CZ
+#    workdays: [mon, tue, wed, thu, fri]
+
+
+
+    ###panel_iframe:
+    ###  configurator:
+    ###    title: Configurator
+    ###    icon: mdi:wrench
+    ###    url: http://0.0.0.0:3218
+    ###  windguru:
+    ###    title: 'Windguru'
+    ###    url: 'https://www.windguru.cz/470505'
+    ###    icon: mdi:weather-windy
+
+
+    #default_view:
+    #  view: yes
+    #  name: Main
+    #  entities:
+    #    - type: gauge
+    #      entity: sensor.cpu_usage
+
+
+
+
+
+
+# Cloud
+#cloud:
+
+
+    #light:
+    #  - platform: template
+    #    lights:
+    #    theater_lights:
+    #    friendly_name: "Theater Lights"
+
+
+    #input_boolean:
+    #  notify_home:
+    #    name: Notify when someone arrives home
+    #    initial: off
+    #    icon: mdi:car
+    #  light_bedroom:
+    #    name: Light in bedroom
+    #    initial: off
+    #    icon: mdi:biohazard
+    #  light_livingroom:
+    #    name: Světlo v obýváku
+    #    initial: off
+    #  light_kitchen:
+    #    name: Světlo v kuchyni
+    #    initial: off
+
+  #api:

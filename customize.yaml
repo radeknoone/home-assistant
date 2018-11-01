@@ -1,0 +1,36 @@
+device_tracker.radek_mb:
+  icon: mdi:cellphone
+device_tracker.alenka_mb:
+  icon: mdi:cellphone
+device_tracker.radek_ntb:
+  icon: mdi:laptop
+device_tracker.wifirouter:
+  icon: mdi:router-wireless
+switch.sonof_switch_01:
+  friendly_name: Lampa u gramofonu
+  icon: mdi:floor-lamp
+switch.sonof_switch_02:
+  friendly_name: Lampička u stolu
+  icon: mdi:desk-lamp
+group.all_lights:
+  hidden: false
+group.all_devices:
+  hidden: false
+group.all_scripts:
+  hidden: false
+group.all_automations:
+  hidden: false
+group.all_locks:
+  hidden: false
+group.all_remotes:
+  hidden: false
+group.all_switches:
+  hidden: false
+switch.sonof_switch_th10_02:
+  friendly_name: Teploměr za televizí
+sensor.temp__th10_2:
+  friendly_name: Teplota u televize
+sensor.temp__th10_1:
+  friendly_name: Teplota venku
+switch.sonof_switch_th10_01:
+  friendly_name: Teploměr za oknem
